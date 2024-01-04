@@ -2,7 +2,7 @@
 
 if __name__ == "__main__":
     from add_0 import add
-    firstNumber = 1
-    secondNumber = 2
+    a = 1
+    b = 2
     print("{} + {} = {}".format(
-        firstNumber, secondNumber, add(firstNumber, secondNumber)))
+        a, b, add(a, b)))
