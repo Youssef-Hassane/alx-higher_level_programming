@@ -9,4 +9,3 @@ def print_matrix_integer(matrix=[[]]):
             if col_index < len(row) - 1:
                 print(" ", end="")
         print()
-        
