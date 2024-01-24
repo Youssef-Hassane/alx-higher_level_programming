@@ -3,13 +3,15 @@
 
 
 class Square:
-    """A class that defines a square by its size, with the ability to calculate its area."""
+    """A class that defines a square by its size,
+    with the ability to calculate its area."""
 
     def __init__(self, size=0):
         """Initialize a new Square with a given size.
 
         Args:
-            size (int): The size of the square, which must be a non-negative integer.
+            size (int): The size of the square,
+            which must be a non-negative integer.
         """
         self.__size = size
 
