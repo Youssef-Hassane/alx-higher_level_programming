@@ -1,0 +1,129 @@
+Import module:
+    >>> text_indentation = __import__('5-text_indentation').text_indentation
+
+Test text without delimiters:
+    >>> text_indentation("Hello Holberton")
+    Hello Holberton
+
+Test text with trailing spaces:
+    >>> text_indentation("Holberton          ")
+    Holberton
+
+Test text with leading spaces:
+    >>> text_indentation("        Holberton")
+    Holberton
+    
+Test text with leading and trailing spaces:
+    >>> text_indentation("        Holberton          ")
+    Holberton
+    
+Test empty string:
+    >>> text_indentation("")
+
+Test only spaces string:
+    >>> text_indentation("      ")
+
+Test colon delimiter:
+    >>> text_indentation("Hello: Holberton")
+    Hello:
+    <BLANKLINE>
+    Holberton
+
+Test delimiters surrounded by spaces:
+    >>> text_indentation("      ?:  :  ")
+    ?
+    <BLANKLINE>
+    :
+    <BLANKLINE>
+    :
+    <BLANKLINE>
+
+Test single newline character:
+    >>> text_indentation("\n")
+    <BLANKLINE>
+
+Test consecutive newline characters:
+    >>> text_indentation("\n\n")
+    <BLANKLINE>
+    <BLANKLINE>
+
+Test newline at the end of text:
+    >>> text_indentation("Hello\n\n")
+    Hello
+    <BLANKLINE>
+
+Test multiple delimiters in text:
+    >>> text_indentation("Hello: Holberton? school. fooo")
+    Hello:
+    <BLANKLINE>
+    Holberton?
+    <BLANKLINE>
+    school.
+    <BLANKLINE>
+    fooo
+
+Test multiple delimiters with spaces in text:
+    >>> text_indentation("Hello   :     Holberton    ?    school.    fooo")
+    Hello:
+    <BLANKLINE>
+    Holberton?
+    <BLANKLINE>
+    school.
+    <BLANKLINE>
+    fooo
+
+Test multiple delimiters with spaces at the end of text:
+    >>> text_indentation("Hello   :     Holberton    ?    school.    fooo     ")
+    Hello:
+    <BLANKLINE>
+    Holberton?
+    <BLANKLINE>
+    school.
+    <BLANKLINE>
+    fooo
+
+Test text with only delimiters:
+    >>> text_indentation(".?:")
+    .
+    <BLANKLINE>
+    ?
+    <BLANKLINE>
+    :
+    <BLANKLINE>
+
+Test text with single delimiter and spaces:
+    >>> text_indentation("     ?   ")
+    ?
+    <BLANKLINE>
+
+Test delimiter followed by text without indentation:
+    >>> text_indentation("?Hello.")
+    ?
+    <BLANKLINE>
+    Hello.
+    <BLANKLINE>
+
+Test delimiters with existing newlines:
+    >>> text_indentation("?\n\n.\n\n:")
+    ?
+    <BLANKLINE>
+    <BLANKLINE>
+    <BLANKLINE>
+    .
+    <BLANKLINE>
+    <BLANKLINE>
+    <BLANKLINE>
+    :
+    <BLANKLINE>
+
+Test passing None as text:
+    >>> text_indentation(None)
+    Traceback (most recent call last):
+    ...
+    TypeError: text must be a string
+
+Test passing a number as text:
+    >>> text_indentation(33)
+    Traceback (most recent call last):
+    ...
+    TypeError: text must be a string

@@ -1,0 +1,117 @@
+Import function from module:
+
+    >>> add_integer = __import__('0-add_integer').add_integer
+
+Testing -  One Argument:
+
+    >>> add_integer(100)
+    198
+
+Testing -  One Argument And Check The Default Value Of The Second Argument:
+
+    >>> add_integer(0)
+    98
+
+Entering a float value:
+
+    >>> add_integer(66.66)
+    164
+
+Entering a negative float value:
+
+    >>> add_integer(-66.66)
+    32
+
+Testing - Two small integers:
+
+    >>> add_integer(45, 10)
+    55
+
+Testing - Two big integers:
+
+    >>> add_integer(987654321, 123456789)
+    1111111110
+
+Testing - 1st argument positive & second argument negative integers:
+
+    >>> add_integer(250, -250)
+    0
+
+Testing - 1st argument positive & second argument negative integers:
+
+    >>> add_integer(250, -300)
+    -50
+
+Testing - 1st argument negative & second argument positive integers:
+
+    >>> add_integer(-250, 250)
+    0
+
+Testing - 1st argument negative & second argument positive integers:
+
+    >>> add_integer(-250, 300)
+    50
+
+Testing - 1st argument Integer & second argument Float values:
+
+    >>> add_integer(99, 1.111)
+    100
+
+
+Testing - 1st argument Float values & second argument Integer values:
+
+    >>> add_integer(1.111, 99)
+    100
+
+Testing - Both the argument are Float:
+
+    >>> add_integer(99.99, 1.9)
+    100
+
+Handling Infinity:
+
+    >>> add_integer(float('inf'), float('-inf'))
+    Traceback (most recent call last):
+    ...
+    OverflowError: cannot convert float infinity to integer
+
+Add Not a Number (NaN) handling:
+
+    >>> add_integer(0, float('nan'))
+    Traceback (most recent call last):
+    ...
+    ValueError: cannot convert float NaN to integer
+
+Testing - First argument is an invalid value:
+
+    >>> add_integer("youssef", 0)
+    Traceback (most recent call last):
+        ...
+    TypeError: a must be an integer
+
+Testing - Second argument is an invalid value:
+
+    >>> add_integer(999, [])
+    Traceback (most recent call last):
+        ...
+    TypeError: b must be an integer
+
+Testing - First & Second arguments are invalid:
+
+    >>> add_integer(None, None)
+    Traceback (most recent call last):
+        ...
+    TypeError: a must be an integer
+
+Testing - Two strings:
+
+    >>> add_integer("youssef", "hassane")
+    Traceback (most recent call last):
+        ...
+    TypeError: a must be an integer
+
+Testing - Float overflow:
+    >>> add_integer(float('inf'), 0)
+    Traceback (most recent call last):
+    ...
+    OverflowError: cannot convert float infinity to integer
