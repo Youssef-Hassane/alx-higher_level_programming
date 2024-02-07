@@ -20,7 +20,8 @@ load_from_json_file = __import__('6-load_from_json_file').load_from_json_file
 
 json_file = "add_item.json"  # Renamed variable for clarity
 
-# Attempt to load existing items from the JSON file, or initialize an empty list
+# Attempt to load existing items from
+# the JSON file, or initialize an empty list
 try:
     list_of_items = load_from_json_file(json_file)
 except FileNotFoundError:
