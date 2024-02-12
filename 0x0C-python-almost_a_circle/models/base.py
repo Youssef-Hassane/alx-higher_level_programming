@@ -128,3 +128,38 @@ class Base:
             return instances
         except FileNotFoundError:
             return []
+
+    @classmethod
+    def save_to_file_csv(cls, list_objs):
+        """Write the list of objects to a CSV file.
+
+        Args:
+            list_objs (list): A list of objects that inherit from Base.
+        """
+        file_name = cls.__name__ + ".csv"
+        with open(file_name, 'w', newline='') as file:
+            writer = csv.writer(file)
+            if list_objs is not None:
+                for obj in list_objs:
+                    writer.writerow([obj.id, obj.width, obj.height, obj.x, obj.y])
+
+    @classmethod
+    def load_from_file_csv(cls):
+        """Load objects from a CSV file.
+
+        This method loads objects from a CSV file and returns a list of
+        instances of the class cls that were saved in the CSV file.
+
+        Returns:
+            list: A list of instances of the class cls that were
+            saved in the CSV file.
+        """
+        file_name = cls.__name__ + ".csv"
+        try:
+            with open(file_name, 'r', newline='') as file:
+                reader = csv.reader(file)
+                object_dicts = [dict(row) for row in reader]
+            instances = [cls.create(**obj) for obj in object_dicts]
+            return instances
+        except FileNotFoundError:
+            return []
