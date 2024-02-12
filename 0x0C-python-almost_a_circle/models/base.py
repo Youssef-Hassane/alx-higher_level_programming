@@ -78,20 +78,31 @@ class Base:
         return json.loads(json_string)
 
     @classmethod
-    def create(cls, **dictionary):
-        """Create a class instance from a dictionary of attributes.
+    def create(cls, **attributes):
+        """Instantiate an object from attribute dictionary.
+
+        This method creates a new instance of the class upon which it's called 
+        (either Rectangle or Square) using a set of predefined initial values. 
+        The instance is then updated with the given attributes.
 
         Args:
-            **dictionary (dict): A dictionary of attributes to be
-            used to create the class instance.
+            **attributes: Arbitrary keyword arguments containing attributes 
+            for the instance.
 
         Returns:
-            object: An instance of the class cls with the attributes
-            specified in the dictionary.
+            The new, updated instance of the class.
         """
-        if cls.__name__ == "Rectangle":
-            dummy = cls(1, 1)
-        elif cls.__name__ == "Square":
-            dummy = cls(1)
-        dummy.update(**dictionary)
-        return dummy
+        from models.rectangle import Rectangle
+        from models.square import Square
+
+        # Determine the class type and create a new instance with default values.
+        if cls is Rectangle:
+            instance = Rectangle(1, 1)  # Default width and height for Rectangle.
+        elif cls is Square:
+            instance = Square(1)  # Default size for Square.
+        else:
+            instance = None  # In case cls is neither Rectangle nor Square.
+
+        # Update instance with the provided attributes and return it.
+        instance.update(**attributes)
+        return instance
