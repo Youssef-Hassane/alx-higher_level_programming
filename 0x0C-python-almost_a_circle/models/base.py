@@ -81,12 +81,12 @@ class Base:
     def create(cls, **attributes):
         """Instantiate an object from attribute dictionary.
 
-        This method creates a new instance of the class upon which it's called 
-        (either Rectangle or Square) using a set of predefined initial values. 
+        This method creates a new instance of the class upon which it's called
+        (either Rectangle or Square) using a set of predefined initial values.
         The instance is then updated with the given attributes.
 
         Args:
-            **attributes: Arbitrary keyword arguments containing attributes 
+            **attributes: Arbitrary keyword arguments containing attributes
             for the instance.
 
         Returns:
@@ -95,9 +95,11 @@ class Base:
         from models.rectangle import Rectangle
         from models.square import Square
 
-        # Determine the class type and create a new instance with default values.
+        # Determine the class type and create a
+        # new instance with default values.
         if cls is Rectangle:
-            instance = Rectangle(1, 1)  # Default width and height for Rectangle.
+            # Default width and height for Rectangle.
+            instance = Rectangle(1, 1)
         elif cls is Square:
             instance = Square(1)  # Default size for Square.
         else:
