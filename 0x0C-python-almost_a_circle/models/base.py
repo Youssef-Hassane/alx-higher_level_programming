@@ -134,7 +134,8 @@ class Base:
     def save_to_file_csv(cls, objects_list):
         """Converts the list of objects to a CSV format and saves it to a file.
 
-        This method takes a list of objects, converts them into a CSV compatible
+        This method takes a list of objects, converts them
+        into a CSV compatible
         format depending on their class type (Rectangle or Square), and writes
         them into a file named after the class with a '.csv' extension.
         """
@@ -182,6 +183,58 @@ class Base:
                 else:
                     attributes_dict = {"id": data_row[0], "size": data_row[1],
                                        "x": data_row[2], "y": data_row[3]}
-                # Create an instance of the class with the attributes and add it to the list
+                # Create an instance of the class with
+                # the attributes and add it to the list
                 instances_list.append(cls.create(**attributes_dict))
         return instances_list
+
+    @staticmethod
+    def draw(rectangles, squares):
+        """Draw both rectangles and squares using turtle graphics.
+
+        This method takes a list of rectangle and square objects,
+        creates a turtle for each one, sets a random pen color,
+        and draws the shape on the screen.
+
+        Args:
+            rectangles: A list of rectangle objects to draw.
+            squares: A list of square objects to draw.
+        """
+        import turtle
+        import time
+        from random import randrange
+
+        # Set color mode for the turtle screen
+        turtle.Screen().colormode(255)
+
+        # Iterate over each shape in the combined
+        # list of rectangles and squares
+        for shape in rectangles + squares:
+            # Create a new turtle instance for drawing
+            artist = turtle.Turtle()
+            # Set a random color for the turtle
+            artist.color((randrange(255), randrange(255), randrange(255)))
+            artist.pensize(1)  # Set the pen size to thin
+            # Lift the pen to move it to a new starting position
+            artist.penup()
+            # Move turtle to start position
+            artist.setpos((shape.x + artist.pos()[0],
+                           shape.y - artist.pos()[1]))
+            # Set the pen size thicker for drawing the shape
+            artist.pensize(10)
+            artist.pendown()   # Put the pen down to start drawing
+
+            # Draw the shape based on its width and height
+            artist.forward(shape.width)  # Draw the bottom edge
+            artist.left(90)              # Turn left to draw the side
+            artist.forward(shape.height)  # Draw the side edge
+            artist.left(90)              # Turn left to draw the top
+            artist.forward(shape.width)  # Draw the top edge
+            artist.left(90)              # Turn left to draw the other side
+            artist.forward(shape.height)  # Draw the other side edge
+            artist.left(90)              # Turn left to complete the shape
+            # Fill the shape (though it's not initialized)
+            artist.end_fill()
+
+        # Pause the screen for 5 seconds before closing
+        time.sleep(5)
