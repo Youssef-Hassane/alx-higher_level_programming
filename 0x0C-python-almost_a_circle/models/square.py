@@ -17,14 +17,15 @@ class Square(theRectangleClass):
             y_axis (int): The vertical offset of the square.
             identity (int): Unique identifier for the square.
         """
-        # Initialize the square as a special case of rectangle with equal sides.
+        # Initialize the square as a special
+        # case of rectangle with equal sides.
         super().__init__(dimension, dimension, x_axis, y_axis, identity)
 
     def __str__(self):
         """Provide a human-readable representation of the square."""
         return ("[Square] ({id}) {x}/{y} - {size}"
                 .format(id=self.id, x=self.x, y=self.y, size=self.size))
-    
+
     @property
     def size(self):
         """Size property to get or set the square's side length."""
@@ -45,8 +46,10 @@ class Square(theRectangleClass):
         the square instance's current properties.
 
         When using *args:
-            - First argument as 'None' re-initializes the instance with existing dimensions.
-            - Subsequent arguments are assigned to properties in a set sequence.
+            - First argument as 'None' re-initializes
+            the instance with existing dimensions.
+            - Subsequent arguments are assigned
+            to properties in a set sequence.
 
         When using **kwargs:
             - Updates are made using named arguments.
@@ -64,13 +67,16 @@ class Square(theRectangleClass):
             If both *args and **kwargs are provided, *args takes priority.
         """
         if args:
-            properties = ['id', 'size', 'x', 'y']  # Property names in the expected order
+            # Property names in the expected order
+            properties = ['id', 'size', 'x', 'y']
             for idx, prop in enumerate(properties):
                 if idx < len(args):
-                    setattr(self, prop, args[idx])  # Assign argument based on index
+                    # Assign argument based on index
+                    setattr(self, prop, args[idx])
         else:
             for property_name, property_value in kwargs.items():
-                setattr(self, property_name, property_value)  # Update properties from keyword arguments
+                # Update properties from keyword arguments
+                setattr(self, property_name, property_value)
 
     def to_dictionary(self):
         """Return a dictionary representation of the square."""
