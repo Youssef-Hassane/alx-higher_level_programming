@@ -131,36 +131,57 @@ class Base:
             return []
 
     @classmethod
-    def save_to_file_csv(cls, list_objs):
-        """Write the list of objects to a CSV file.
+    def save_to_file_csv(cls, objects_list):
+        """Converts the list of objects to a CSV format and saves it to a file.
 
-        Args:
-            list_objs (list): A list of objects that inherit from Base.
+        This method takes a list of objects, converts them into a CSV compatible
+        format depending on their class type (Rectangle or Square), and writes
+        them into a file named after the class with a '.csv' extension.
         """
-        file_name = cls.__name__ + ".csv"
-        with open(file_name, 'w', newline='') as file:
-            writer = csv.writer(file)
-            if list_objs is not None:
-                for obj in list_objs:
-                    writer.writerow([obj.id, obj.width, obj.height, obj.x, obj.y])
+        from models.rectangle import Rectangle
+        from models.square import Square
+        # Check if the list of objects is not empty
+        if objects_list is not None:
+            # Convert each object to a list depending on its type
+            if cls is Rectangle:
+                csv_data = [[obj.id, obj.width, obj.height, obj.x, obj.y]
+                            for obj in objects_list]
+            else:
+                csv_data = [[obj.id, obj.size, obj.x, obj.y]
+                            for obj in objects_list]
+        # Open a file in write mode to save the CSV data
+        with open('{}.csv'.format(cls.__name__), 'w', newline='',
+                  encoding='utf-8') as file:
+            csv_writer = csv.writer(file)
+            csv_writer.writerows(csv_data)
 
     @classmethod
     def load_from_file_csv(cls):
-        """Load objects from a CSV file.
+        """Loads objects from a CSV file and returns a list of instances.
 
-        This method loads objects from a CSV file and returns a list of
-        instances of the class cls that were saved in the CSV file.
-
-        Returns:
-            list: A list of instances of the class cls that were
-            saved in the CSV file.
+        This method reads a CSV file named after the class with a '.csv'
+        extension, converts the CSV data into a list of dictionaries with
+        the corresponding attributes, and then uses these dictionaries to
+        create and return a list of class instances.
         """
-        file_name = cls.__name__ + ".csv"
-        try:
-            with open(file_name, 'r', newline='') as file:
-                reader = csv.reader(file)
-                object_dicts = [dict(row) for row in reader]
-            instances = [cls.create(**obj) for obj in object_dicts]
-            return instances
-        except FileNotFoundError:
-            return []
+        from models.rectangle import Rectangle
+        from models.square import Square
+        instances_list = []
+        # Open the CSV file and read the contents
+        with open('{}.csv'.format(cls.__name__), 'r', newline='',
+                  encoding='utf-8') as file:
+            csv_reader = csv.reader(file)
+            for data_row in csv_reader:
+                # Convert all the string elements to integers
+                data_row = [int(elem) for elem in data_row]
+                # Build the dictionary with the right keys based on the class
+                if cls is Rectangle:
+                    attributes_dict = {"id": data_row[0], "width": data_row[1],
+                                       "height": data_row[2], "x": data_row[3],
+                                       "y": data_row[4]}
+                else:
+                    attributes_dict = {"id": data_row[0], "size": data_row[1],
+                                       "x": data_row[2], "y": data_row[3]}
+                # Create an instance of the class with the attributes and add it to the list
+                instances_list.append(cls.create(**attributes_dict))
+        return instances_list
