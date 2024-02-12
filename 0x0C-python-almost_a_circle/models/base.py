@@ -24,19 +24,37 @@ class Base:
             self.id = Base.__nb_objects
 
     @staticmethod
-    def to_json_string(list_dictionaries):
-        """ Return the JSON string representation of list_dictionaries """
-        if list_dictionaries is None or len(list_dictionaries) == 0:
+    def to_json_string(dict_list):
+        """Convert a list of dictionaries to a JSON string.
+        
+        Args:
+            dict_list (list): A list of dictionaries to be converted to JSON string.
+            
+        Returns:
+            str: The JSON string representation of dict_list. Returns an empty list 
+            as a JSON string if dict_list is None or empty.
+        """
+        if not dict_list:
             return "[]"
-        return json.dumps(list_dictionaries)
-    
+        return json.dumps(dict_list)
+
     @classmethod
-    def save_to_file(cls, list_objs):
-        """ Write the JSON string representation of list_objs to a file """
-        filename = cls.__name__ + ".json"
-        with open(filename, 'w') as f:
-            if list_objs is None:
-                f.write("[]")
+    def save_to_file(cls, objects):
+        """Save the JSON string representation of a list of objects to a file.
+        
+        The file is named after the class of the objects.
+        
+        Args:
+            objects (list): A list of instances that inherit from Base.
+            
+        Side Effects:
+            Writes the JSON string to a file with the name <ClassName>.json. 
+            If the list is None or empty, writes an empty list to the file.
+        """
+        file_name = cls.__name__ + ".json"
+        with open(file_name, 'w') as file:
+            if objects is None:
+                file.write("[]")
             else:
-                list_dicts = [o.to_dictionary() for o in list_objs]
-                f.write(Base.to_json_string(list_dicts))
+                object_dicts = [obj.to_dictionary() for obj in objects]
+                file.write(Base.to_json_string(object_dicts))
