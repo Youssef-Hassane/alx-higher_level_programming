@@ -119,60 +119,17 @@ class Rectangle(theBaseClass):
                         width=self.width, height=self.height))
 
     def update(self, *args, **kwargs):
-        """
-        Update rectangle attributes with new values.
-
-        This method accepts varying numbers of positional (*args) and keyword
-        (**kwargs) arguments to update the attributes of the rectangle.
-
-        In *args mode:
-            - The method initializes the object with
-            existing dimensions if 'None' is
-            passed as the first argument.
-            - Otherwise, it sequentially assigns each argument to an attribute.
-
-        In **kwargs mode:
-            - The method performs a similar update but uses keyword arguments.
-            - A 'None' value for the 'id' keyword re-initializes the object.
-
-        Args:
-            *args: Variable length argument list
-            representing attributes in order:
-                - id (int): Unique identifier; can be 'None' to re-initialize.
-                - width (int): Rectangle's width.
-                - height (int): Rectangle's height.
-                - x (int): Horizontal position.
-                - y (int): Vertical position.
-            **kwargs: Arbitrary keyword arguments corresponding to attributes.
-
-        Note:
-            The *args mode takes precedence over **kwargs if both are provided.
-        """
-        # *args mode: Update attributes using a list of arguments.
-        if args and len(args) != 0:
-            attr_names = ["id", "width", "height", "x", "y"]
-            for i, attr_value in enumerate(args):
-                if i == 0:
-                    # Re-initialize or set 'id' based on the first argument.
-                    if attr_value is None:
-                        self.__init__(self.width, self.height, self.x, self.y)
-                    else:
-                        self.id = attr_value
-                else:
-                    # Set attributes directly using the order in 'attr_names'.
-                    setattr(self, attr_names[i], attr_value)
-        # **kwargs mode: Update attributes using keyword arguments.
-        else:
+        """update class atrbutes"""
+        keys = ("id", "width", "height", "x", "y")
+        for key, value in zip(keys, args):
+            if key == "id" and not isinstance(value, int):
+                continue
+            setattr(self, key, value)
+        if not args:
             for key, value in kwargs.items():
-                if key == "id":
-                    # Re-initialize or set 'id' based on the 'id' keyword.
-                    if value is None:
-                        self.__init__(self.width, self.height, self.x, self.y)
-                    else:
-                        self.id = value
-                else:
-                    # Set attributes directly based on keyword names.
-                    setattr(self, key, value)
+                if key == "id" and not isinstance(value, int):
+                    continue
+                setattr(self, key, value)
 
     def to_dictionary(self):
         '''Returns dictionary representation of this class.'''

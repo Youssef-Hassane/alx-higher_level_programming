@@ -131,62 +131,53 @@ class Base:
             return []
 
     @classmethod
-    def save_to_file_csv(cls, objects_list):
-        """Converts the list of objects to a CSV format and saves it to a file.
+    def save_to_file_csv(cls, list_objs):
+        """Make a CVS class file represntation"""
 
-        This method takes a list of objects, converts them
-        into a CSV compatible
-        format depending on their class type (Rectangle or Square), and writes
-        them into a file named after the class with a '.csv' extension.
-        """
-        from models.rectangle import Rectangle
-        from models.square import Square
-        # Check if the list of objects is not empty
-        if objects_list is not None:
-            # Convert each object to a list depending on its type
-            if cls is Rectangle:
-                csv_data = [[obj.id, obj.width, obj.height, obj.x, obj.y]
-                            for obj in objects_list]
+        r_keys = ("id", "width", "height", "x", "y")
+        s_keys = ("id", "size", "x", "y")
+        class_name = cls.__name__
+        list_dict = (
+            [*map(lambda self: self.to_dictionary(), list_objs)]
+            if list_objs else []
+        )
+        csv_list = []
+        for inst_dict in list_dict:
+            inst_list = []
+            keys_list = inst_dict.keys()
+            for key in s_keys if class_name == "Square" else r_keys:
+                if key in keys_list:
+                    inst_list.append(str(inst_dict[key]))
+            if inst_list:
+                csv_list.append(inst_list)
+
+        with open(f"{class_name}.csv", "w") as f:
+            if list_objs:
+                if class_name == "Square":
+                    f.write(",".join(s_keys) + "\n")
+                elif class_name == "Rectangle":
+                    f.write(",".join(r_keys) + "\n")
+                for row in csv_list:
+                    f.write(",".join(row) + "\n")
             else:
-                csv_data = [[obj.id, obj.size, obj.x, obj.y]
-                            for obj in objects_list]
-        # Open a file in write mode to save the CSV data
-        with open('{}.csv'.format(cls.__name__), 'w', newline='',
-                  encoding='utf-8') as file:
-            csv_writer = csv.writer(file)
-            csv_writer.writerows(csv_data)
+                f.write("[]")
 
     @classmethod
     def load_from_file_csv(cls):
-        """Loads objects from a CSV file and returns a list of instances.
-
-        This method reads a CSV file named after the class with a '.csv'
-        extension, converts the CSV data into a list of dictionaries with
-        the corresponding attributes, and then uses these dictionaries to
-        create and return a list of class instances.
-        """
-        from models.rectangle import Rectangle
-        from models.square import Square
-        instances_list = []
-        # Open the CSV file and read the contents
-        with open('{}.csv'.format(cls.__name__), 'r', newline='',
-                  encoding='utf-8') as file:
-            csv_reader = csv.reader(file)
-            for data_row in csv_reader:
-                # Convert all the string elements to integers
-                data_row = [int(elem) for elem in data_row]
-                # Build the dictionary with the right keys based on the class
-                if cls is Rectangle:
-                    attributes_dict = {"id": data_row[0], "width": data_row[1],
-                                       "height": data_row[2], "x": data_row[3],
-                                       "y": data_row[4]}
-                else:
-                    attributes_dict = {"id": data_row[0], "size": data_row[1],
-                                       "x": data_row[2], "y": data_row[3]}
-                # Create an instance of the class with
-                # the attributes and add it to the list
-                instances_list.append(cls.create(**attributes_dict))
-        return instances_list
+        """Load a class from a CVS class file represntation"""
+        class_name = cls.__name__
+        try:
+            with open(f"{class_name}.csv", "r") as f:
+                inst_list = []
+                for line in f:
+                    if "id" in line:
+                        continue
+                    obj = cls(1) if class_name == "Square" else cls(1, 1)
+                    obj.update(*map(int, line.split(",")))
+                    inst_list.append(obj)
+                return inst_list
+        except FileNotFoundError:
+            return []
 
     @staticmethod
     def draw(rectangles, squares):

@@ -2,10 +2,10 @@
 """
 The module contains the class Square
 """
-from models.rectangle import Rectangle as theRectangleClass
+from models.rectangle import Rectangle
 
 
-class Square(theRectangleClass):
+class Square(Rectangle):
     """Square shape representation inheriting from Rectangle."""
 
     def __init__(self, dimension, x_axis=0, y_axis=0, identity=None):
