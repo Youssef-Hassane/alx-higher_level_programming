@@ -26,12 +26,14 @@ class Base:
     @staticmethod
     def to_json_string(dict_list):
         """Convert a list of dictionaries to a JSON string.
-        
+
         Args:
-            dict_list (list): A list of dictionaries to be converted to JSON string.
-            
+            dict_list (list): A list of dictionaries to be
+            converted to JSON string.
+
         Returns:
-            str: The JSON string representation of dict_list. Returns an empty list 
+            str: The JSON string representation of dict_list.
+            Returns an empty list
             as a JSON string if dict_list is None or empty.
         """
         if not dict_list:
@@ -41,14 +43,14 @@ class Base:
     @classmethod
     def save_to_file(cls, objects):
         """Save the JSON string representation of a list of objects to a file.
-        
+
         The file is named after the class of the objects.
-        
+
         Args:
             objects (list): A list of instances that inherit from Base.
-            
+
         Side Effects:
-            Writes the JSON string to a file with the name <ClassName>.json. 
+            Writes the JSON string to a file with the name <ClassName>.json.
             If the list is None or empty, writes an empty list to the file.
         """
         file_name = cls.__name__ + ".json"
