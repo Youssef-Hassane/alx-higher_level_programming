@@ -108,3 +108,23 @@ class Base:
         # Update instance with the provided attributes and return it.
         instance.update(**attributes)
         return instance
+
+    @classmethod
+    def load_from_file(cls):
+        """Load objects from a JSON file.
+
+        This method loads objects from a JSON file and returns a list of
+        instances of the class cls that were saved in the JSON file.
+
+        Returns:
+            list: A list of instances of the class cls that were
+            saved in the JSON file.
+        """
+        file_name = cls.__name__ + ".json"
+        try:
+            with open(file_name, 'r') as file:
+                object_dicts = cls.from_json_string(file.read())
+            instances = [cls.create(**obj) for obj in object_dicts]
+            return instances
+        except FileNotFoundError:
+            return []
