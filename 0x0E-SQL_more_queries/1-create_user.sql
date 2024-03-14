@@ -4,7 +4,7 @@
 -- Do not fail if user_0d_1 already exists
 CREATE USER 
     IF NOT EXISTS user_0d_1@localhost IDENTIFIED BY user_0d_1_pwd;
-GRANT ALL PRIVILEGES 
+GRANT ALL 
     ON *.* 
-    TO user_0d_1@localhost WITH GRANT OPTION;
+    TO user_0d_1@localhost;
 FLUSH PRIVILEGES;
