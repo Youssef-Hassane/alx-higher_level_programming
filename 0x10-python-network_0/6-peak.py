@@ -14,10 +14,8 @@ def find_peak(num_list):
     lst_len = len(num_list)
     if lst_len == 0:
         return None
-
     peak_index = binary_search(num_list, 0, lst_len - 1)
     return num_list[peak_index]
-
 
 def binary_search(nums, low, high):
     """Recursive binary search of the peak.
