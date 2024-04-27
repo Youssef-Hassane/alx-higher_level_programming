@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-This module defines a function that finds a peak in a list of unsorted integers.
+This module defines a function that finds
+a peak in a list of unsorted integers.
 """
 
 
@@ -16,6 +17,7 @@ def find_peak(num_list):
         return None
     peak_index = binary_search(num_list, 0, lst_len - 1)
     return num_list[peak_index]
+
 
 def binary_search(nums, low, high):
     """Recursive binary search of the peak.
