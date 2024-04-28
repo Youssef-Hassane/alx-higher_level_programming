@@ -15,5 +15,5 @@ if __name__ == "__main__":
         print("Body response:")
         # Print the type of the response text
         print(f"\t- type: {type(r)}")
-         # Print the content of the response text
+        # Print the content of the response text
         print(f"\t- content: {r}")
