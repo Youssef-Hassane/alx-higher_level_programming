@@ -13,9 +13,10 @@ if __name__ == "__main__":
     database_name = argv[3]
     database_charset = "utf8"
 
-    database_connection = MySQLdb.connect(host=database_host, port=database_port,
-                                        user=database_user, passwd=database_passwd,
-                                        db=database_name, charset=database_charset)
+    database_connection = MySQLdb.connect(
+        host=database_host, port=database_port,
+        user=database_user, passwd=database_passwd,
+        db=database_name, charset=database_charset)
 
     # Create cursor to execute query
     database_cursor = database_connection.cursor()
