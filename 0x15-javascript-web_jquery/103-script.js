@@ -1,10 +1,6 @@
 $(document).ready(() => {
 	$('#btn_translate').click(callBackFunction);
-	$('#language_code').keypress((event) => {
-		if (event.which === 13) {
-			callBackFunction();
-		}
-	});
+	$('#language_code').keypress(keyPress);
 });
 
 function callBackFunction() {
@@ -16,4 +12,10 @@ function callBackFunction() {
 
 function addText(data) {
 	$('#hello').text(data.hello);
+}
+
+function keyPress(event) {
+	if (event.which === 13) {
+		callBackFunction();
+	}
 }
